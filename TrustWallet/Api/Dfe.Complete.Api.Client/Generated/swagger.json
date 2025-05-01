@@ -1,0 +1,1779 @@
+{
+  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v1/CsvExport": {
+      "post": {
+        "tags": [
+          "CsvExport"
+        ],
+        "operationId": "CsvExport_GetConversionCsvByMonth",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/CsvExport/Contents": {
+      "post": {
+        "tags": [
+          "CsvExport"
+        ],
+        "operationId": "CsvExport_GetConversionCsvByMonthContents",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File contents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    },
+    "/v1/Projects": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Creates a new Project",
+        "operationId": "Projects_CreateProject",
+        "requestBody": {
+          "x-name": "request",
+          "description": "The request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversionProjectCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Project created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Gets a Project",
+        "operationId": "Projects_GetProject",
+        "parameters": [
+          {
+            "name": "Urn.Value",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Removes project based on URN for test purposes.",
+        "operationId": "Projects_RemoveProject",
+        "requestBody": {
+          "x-name": "urn",
+          "description": "Urn to remove.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Urn"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "Project Group returned successfully."
+          }
+        }
+      }
+    },
+    "/v1/Projects/List/All": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Returns a list of Projects",
+        "operationId": "Projects_ListAllProjects",
+        "parameters": [
+          {
+            "name": "ProjectStatus",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectState"
+                }
+              ]
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectType"
+                }
+              ]
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListAllProjectsResultModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    },
+    "/v1/Projects/Count/All": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Returns the number of Projects",
+        "operationId": "Projects_CountAllProjects",
+        "parameters": [
+          {
+            "name": "ProjectStatus",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectState"
+                }
+              ]
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectType"
+                }
+              ]
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    },
+    "/v1/Projects/{groupReferenceNumber}/project_group": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Gets the UKPRN for a group reference number.",
+        "operationId": "Projects_GetProjectGroupByGroupReferenceNumber_",
+        "parameters": [
+          {
+            "name": "groupReferenceNumber",
+            "in": "path",
+            "required": true,
+            "description": "The group reference number.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project Group returned successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectGroupDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid group reference number."
+          },
+          "404": {
+            "description": "Project Group not found for the given group reference number."
+          }
+        }
+      }
+    },
+    "/v1/Trust/List/All": {
+      "get": {
+        "tags": [
+          "Trust"
+        ],
+        "summary": "Returns a list of trusts with projects",
+        "operationId": "Trust_ListAllTrustsWithProjects",
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trusts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListTrustsWithProjectsResultModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    },
+    "/v1/Users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets a User with their assigned projects",
+        "operationId": "Users_GetUserWithProjects",
+        "parameters": [
+          {
+            "name": "UserId.Value",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectState"
+                }
+              ]
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithProjectsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    },
+    "/v1/Users/List/All": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns a list of Users with their assigned projects",
+        "operationId": "Users_ListAllUsersWithProjects",
+        "parameters": [
+          {
+            "name": "State",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ProjectState"
+                }
+              ]
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserWithProjectsDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProjectId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "CreateConversionProjectCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "$ref": "#/components/schemas/Urn"
+          },
+          "significantDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "isSignificantDateProvisional": {
+            "type": "boolean"
+          },
+          "incomingTrustUkprn": {
+            "$ref": "#/components/schemas/Ukprn"
+          },
+          "isDueTo2Ri": {
+            "type": "boolean"
+          },
+          "hasAcademyOrderBeenIssued": {
+            "type": "boolean"
+          },
+          "advisoryBoardDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "advisoryBoardConditions": {
+            "type": "string"
+          },
+          "establishmentSharepointLink": {
+            "type": "string"
+          },
+          "incomingTrustSharepointLink": {
+            "type": "string"
+          },
+          "groupReferenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "handingOverToRegionalCaseworkService": {
+            "type": "boolean"
+          },
+          "handoverComments": {
+            "type": "string"
+          },
+          "userAdId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Urn": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Ukprn": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ProjectDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ProjectId"
+          },
+          "urn": {
+            "$ref": "#/components/schemas/Urn"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "incomingTrustUkprn": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Ukprn"
+              }
+            ]
+          },
+          "regionalDeliveryOfficerId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserId"
+              }
+            ]
+          },
+          "caseworkerId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserId"
+              }
+            ]
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "advisoryBoardDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "advisoryBoardConditions": {
+            "type": "string",
+            "nullable": true
+          },
+          "establishmentSharepointLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "incomingTrustSharepointLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "assignedToId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserId"
+              }
+            ]
+          },
+          "significantDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "significantDateProvisional": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "directiveAcademyOrder": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "region": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Region"
+              }
+            ]
+          },
+          "academyUrn": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Urn"
+              }
+            ]
+          },
+          "tasksDataId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TaskDataId"
+              }
+            ]
+          },
+          "tasksDataType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TaskType"
+              }
+            ]
+          },
+          "outgoingTrustUkprn": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Ukprn"
+              }
+            ]
+          },
+          "team": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectTeam"
+              }
+            ]
+          },
+          "twoRequiresImprovement": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "outgoingTrustSharepointLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "allConditionsMet": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "mainContactId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactId"
+              }
+            ]
+          },
+          "establishmentMainContactId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactId"
+              }
+            ]
+          },
+          "incomingTrustMainContactId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactId"
+              }
+            ]
+          },
+          "outgoingTrustMainContactId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactId"
+              }
+            ]
+          },
+          "newTrustReferenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "newTrustName": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/ProjectState"
+          },
+          "prepareId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "localAuthorityMainContactId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactId"
+              }
+            ]
+          },
+          "groupId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectGroupId"
+              }
+            ]
+          },
+          "assignedTo": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "caseworker": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Contact"
+            }
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Note"
+            }
+          },
+          "regionalDeliveryOfficer": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        }
+      },
+      "UserId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "ProjectType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Conversion",
+          "Transfer"
+        ],
+        "enum": [
+          "Conversion",
+          "Transfer"
+        ]
+      },
+      "Region": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "NorthEast",
+          "NorthWest",
+          "YorkshireAndTheHumber",
+          "EastMidlands",
+          "WestMidlands",
+          "EastOfEngland",
+          "London",
+          "SouthEast",
+          "SouthWest"
+        ],
+        "enum": [
+          "NorthEast",
+          "NorthWest",
+          "YorkshireAndTheHumber",
+          "EastMidlands",
+          "WestMidlands",
+          "EastOfEngland",
+          "London",
+          "SouthEast",
+          "SouthWest"
+        ]
+      },
+      "TaskDataId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "TaskType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Conversion",
+          "Transfer"
+        ],
+        "enum": [
+          "Conversion",
+          "Transfer"
+        ]
+      },
+      "ProjectTeam": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "RegionalCaseWorkerServices",
+          "ServiceSupport",
+          "London",
+          "SouthEast",
+          "YorkshireAndTheHumber",
+          "NorthWest",
+          "EastOfEngland",
+          "WestMidlands",
+          "NorthEast",
+          "SouthWest",
+          "EastMidlands",
+          "BusinessSupport",
+          "DataConsumers"
+        ],
+        "enum": [
+          "RegionalCaseWorkerServices",
+          "ServiceSupport",
+          "London",
+          "SouthEast",
+          "YorkshireAndTheHumber",
+          "NorthWest",
+          "EastOfEngland",
+          "WestMidlands",
+          "NorthEast",
+          "SouthWest",
+          "EastMidlands",
+          "BusinessSupport",
+          "DataConsumers"
+        ]
+      },
+      "ContactId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "ProjectState": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Active",
+          "Completed",
+          "Cancelled"
+        ],
+        "enum": [
+          "Active",
+          "Completed",
+          "Cancelled"
+        ]
+      },
+      "ProjectGroupId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "User": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseAggregateRoot"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/UserId"
+              },
+              "email": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "manageTeam": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "addNewProject": {
+                "type": "boolean"
+              },
+              "firstName": {
+                "type": "string",
+                "nullable": true
+              },
+              "lastName": {
+                "type": "string",
+                "nullable": true
+              },
+              "activeDirectoryUserId": {
+                "type": "string",
+                "nullable": true
+              },
+              "assignToProject": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "manageUserAccounts": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "activeDirectoryUserGroupIds": {
+                "type": "string",
+                "nullable": true
+              },
+              "team": {
+                "type": "string",
+                "nullable": true
+              },
+              "deactivatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "manageConversionUrns": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "manageLocalAuthorities": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "latestSession": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              },
+              "projectAssignedTos": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              },
+              "projectCaseworkers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              },
+              "projectRegionalDeliveryOfficers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Note": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/NoteId"
+          },
+          "body": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectId"
+              }
+            ]
+          },
+          "userId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserId"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "notableId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "notableType": {
+            "type": "string",
+            "nullable": true
+          },
+          "project": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Project"
+              }
+            ]
+          },
+          "user": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        }
+      },
+      "NoteId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "Project": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseAggregateRoot"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/ProjectId"
+              },
+              "urn": {
+                "$ref": "#/components/schemas/Urn"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "incomingTrustUkprn": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Ukprn"
+                  }
+                ]
+              },
+              "regionalDeliveryOfficerId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserId"
+                  }
+                ]
+              },
+              "caseworkerId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserId"
+                  }
+                ]
+              },
+              "assignedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "advisoryBoardDate": {
+                "type": "string",
+                "format": "date",
+                "nullable": true
+              },
+              "advisoryBoardConditions": {
+                "type": "string",
+                "nullable": true
+              },
+              "establishmentSharepointLink": {
+                "type": "string",
+                "nullable": true
+              },
+              "completedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "incomingTrustSharepointLink": {
+                "type": "string",
+                "nullable": true
+              },
+              "type": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ProjectType"
+                  }
+                ]
+              },
+              "assignedToId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserId"
+                  }
+                ]
+              },
+              "significantDate": {
+                "type": "string",
+                "format": "date",
+                "nullable": true
+              },
+              "significantDateProvisional": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "directiveAcademyOrder": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "region": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Region"
+                  }
+                ]
+              },
+              "academyUrn": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Urn"
+                  }
+                ]
+              },
+              "tasksDataId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskDataId"
+                  }
+                ]
+              },
+              "tasksDataType": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskType"
+                  }
+                ]
+              },
+              "outgoingTrustUkprn": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Ukprn"
+                  }
+                ]
+              },
+              "team": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ProjectTeam"
+                  }
+                ]
+              },
+              "twoRequiresImprovement": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "outgoingTrustSharepointLink": {
+                "type": "string",
+                "nullable": true
+              },
+              "allConditionsMet": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "mainContactId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactId"
+                  }
+                ]
+              },
+              "establishmentMainContactId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactId"
+                  }
+                ]
+              },
+              "incomingTrustMainContactId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactId"
+                  }
+                ]
+              },
+              "outgoingTrustMainContactId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactId"
+                  }
+                ]
+              },
+              "newTrustReferenceNumber": {
+                "type": "string",
+                "nullable": true
+              },
+              "newTrustName": {
+                "type": "string",
+                "nullable": true
+              },
+              "state": {
+                "$ref": "#/components/schemas/ProjectState"
+              },
+              "prepareId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "localAuthorityMainContactId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactId"
+                  }
+                ]
+              },
+              "groupId": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ProjectGroupId"
+                  }
+                ]
+              },
+              "localAuthorityId": {
+                "$ref": "#/components/schemas/LocalAuthorityId"
+              },
+              "formAMat": {
+                "type": "boolean"
+              },
+              "assignedTo": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
+              },
+              "caseworker": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
+              },
+              "contacts": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              },
+              "regionalDeliveryOfficer": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
+              },
+              "localAuthority": {
+                "$ref": "#/components/schemas/LocalAuthority"
+              }
+            }
+          }
+        ]
+      },
+      "LocalAuthorityId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ContactId"
+          },
+          "projectId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectId"
+              }
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ContactCategory"
+          },
+          "organisationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "localAuthorityId": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LocalAuthorityId"
+              }
+            ]
+          },
+          "establishmentUrn": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "project": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Project"
+              }
+            ]
+          }
+        }
+      },
+      "ContactCategory": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Other",
+          "SchoolOrAcademy",
+          "IncomingTrust",
+          "LocalAuthority",
+          "Diocese",
+          "Solicitor",
+          "OutgoingTrust"
+        ],
+        "enum": [
+          "Other",
+          "SchoolOrAcademy",
+          "IncomingTrust",
+          "LocalAuthority",
+          "Diocese",
+          "Solicitor",
+          "OutgoingTrust"
+        ]
+      },
+      "LocalAuthority": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseAggregateRoot"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/LocalAuthorityId"
+              },
+              "name": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "address1": {
+                "type": "string"
+              },
+              "address2": {
+                "type": "string",
+                "nullable": true
+              },
+              "address3": {
+                "type": "string",
+                "nullable": true
+              },
+              "addressTown": {
+                "type": "string",
+                "nullable": true
+              },
+              "addressCounty": {
+                "type": "string",
+                "nullable": true
+              },
+              "addressPostcode": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      },
+      "BaseAggregateRoot": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "properties": {
+          "domainEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IDomainEvent"
+            }
+          }
+        }
+      },
+      "IDomainEvent": {
+        "type": "object",
+        "x-abstract": true,
+        "additionalProperties": false,
+        "properties": {
+          "occurredOn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ListAllProjectsResultModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "establishmentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "$ref": "#/components/schemas/ProjectId"
+          },
+          "urn": {
+            "$ref": "#/components/schemas/Urn"
+          },
+          "conversionOrTransferDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/ProjectState"
+          },
+          "projectType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectType"
+              }
+            ]
+          },
+          "isFormAMAT": {
+            "type": "boolean"
+          },
+          "assignedToFullName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ProjectGroupDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ProjectGroupId"
+          },
+          "groupIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustUkprn": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Ukprn"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ListTrustsWithProjectsResultModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "trustName": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "conversionCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transfersCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UserWithProjectsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/UserId"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "team": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProjectTeam"
+              }
+            ]
+          },
+          "projectsAssigned": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListAllProjectsResultModel"
+            }
+          },
+          "conversionProjectsAssigned": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transferProjectsAssigned": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}
